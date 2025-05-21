@@ -90,8 +90,8 @@ IsInWhiteWIndows(hWnd) {
         if (v.path != '' && v.path = exePath) {
             return true
         }
-        continue
     }
+    return false
 }
 
 ; 自定义遍历函数
