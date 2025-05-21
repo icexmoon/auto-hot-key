@@ -20,11 +20,11 @@
 
 从[auto-hot-key/script](https://github.com/icexmoon/auto-hot-key/tree/main/script)下载脚本文件，右键打开：
 
-![image-20250521115426057](./images/image-20250521115426057.png)
+![image-20250521115426057](D:\image\typora\image-20250521115426057.png)
 
 如果能正常运行，任务栏托盘就会出现脚本标识：
 
-![image-20250521115517528](./images/image-20250521115517528.png)
+![image-20250521115517528](D:\image\typora\image-20250521115517528.png)
 
 > 右键可以操作脚本，比如暂停脚本或退出。
 
@@ -32,11 +32,11 @@
 
 `win+R`打开运行窗口，输入`shell:startup`：
 
-![image-20250521120210367](./images/image-20250521120210367.png)
+![image-20250521120210367](D:\image\typora\image-20250521120210367.png)
 
 打开的文件目录为 Windows 当前用户登录后会自动执行的程序目录，为需要开机自启动的脚本创建快捷方式，并复制粘贴到这里：
 
-![image-20250521120351620](./images/image-20250521120351620.png)
+![image-20250521120351620](D:\image\typora\image-20250521120351620.png)
 
 # 其它建议
 
