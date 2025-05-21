@@ -8,6 +8,15 @@
 #d:: ; 覆盖系统默认的 win+D 热键，可以按照喜好替换
 ; 获取鼠标所在显示器的坐标范围
 {
+    ; 白名单，在这个名单中的应用窗体不会被关闭，如果一些特殊的窗体最小化，会导致 bug，比如资源管理器的任务栏或者小红车
+    global whiteList := [
+        NewWhiteWindow("Shell_SecondaryTrayWnd", ""), ; 辅助屏幕任务栏
+        NewWhiteWindow("hell_TrayWnd", ""), ; 主屏幕任务栏
+        NewWhiteWindow("workerW", ""),
+        NewWhiteWindow("PseudoConsoleWindow", "") ; powershell
+    ]
+    ; 设置坐标模式为屏幕绝对坐标（避免窗口干扰）[2,4](@ref)
+    CoordMode "Mouse", "Screen"
     mouseX := 0, mouseY := 0
     MouseGetPos(&mouseX, &mouseY)
     activeMonitor := GetMonitorAtCoords(mouseX, mouseY)
@@ -22,9 +31,9 @@
                 && IsWindowOnMonitor(hWnd, activeMonitor)
                 && !WinActive("Program Manager")
             {
-                ; 如果窗口是辅助监视器的任务栏，不能最小化
-                className := WinGetClass(hWnd)
-                if (className != "Shell_SecondaryTrayWnd") {
+                ; 如果窗口在白名单中，不最小化
+                ; className := WinGetClass(hWnd)
+                if (!IsInWhiteWIndows(hWnd)) {
                     WinMinimize("ahk_id " hWnd)
                 }
             }
@@ -58,4 +67,44 @@ GetMonitorAtCoords(x, y) {
             return A_Index
     }
     return 1 ; 默认返回主显示器
+}
+
+; 判断窗口是不是在白名单中
+IsInWhiteWIndows(hWnd) {
+    className := WinGetClass(hWnd)
+    exePath := WinGetProcessPath(hWnd)
+    for k, v in whiteList {
+        ; 如果白名单应用的类名和路径都设置了，要都匹配才能算属于白名单
+        if (v.className != '' && v.path != '') {
+            if (v.className = className && v.path = exePath) {
+                return true
+            }
+            else {
+                continue
+            }
+        }
+        ; 类名或路径有缺省，只需要匹配到类名或路径
+        if (v.className != '' && className = v.className) {
+            return true
+        }
+        if (v.path != '' && v.path = exePath) {
+            return true
+        }
+        continue
+    }
+}
+
+; 自定义遍历函数
+HasValue(haystack, needle) {
+    if !IsObject(haystack)  ; 非数组直接返回 false
+        return false
+    for k, v in haystack
+        if (v = needle)    ; 不区分大小写比较
+            return true
+    return false
+}
+
+; 返回一个自定义窗体对象，用于白名单
+NewWhiteWindow(className, path) {
+    return { className: className, path: path }
 }
