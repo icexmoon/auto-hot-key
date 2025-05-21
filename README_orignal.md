@@ -38,6 +38,55 @@
 
 ![image-20250521120351620](D:\image\typora\image-20250521120351620.png)
 
+# 开发&&调试
+
+编写 ahk 脚本建议使用 VSCode。
+
+插件可以使用这个：
+
+![image-20250521173535228](.\images\image-20250521173535228.png)
+
+可以对代码格式化以及高亮显示。
+
+还有这个：
+
+![image-20250521173653281](.\images\image-20250521173653281.png)
+
+可以调用 AHK 的主程序进行 debug，方式与一般的软件开发一样，先配置一个 debug 配置。即在工程目录下添加`.vscode/launch.json`：
+
+```json
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "ahkdbg",
+            "request": "launch",
+            "name": "A new configuration for 'debugging' AutoHotKey.",
+            "program": "",
+            "stopOnEntry": true,
+            "captureStreams": true,
+            "runtime": "C:\\Program Files\\AutoHotkey\\v2\\AutoHotkey.exe",
+            "port": 9005
+        },
+        {
+            "type": "ahkdbg",
+            "request": "launch",
+            "name": "AHKDebug",
+            "program": "${file}",
+            "stopOnEntry": false,
+            "captureStreams": true,
+            "runtime": "C:\\Program Files\\AutoHotkey\\v2\\AutoHotkey.exe",
+            "port": 9005
+        }
+    ]
+}
+```
+
+如果是通过插件自动生成，这里的`runtime`需要手动调整下，默认生成的配置使用的主程序位置缺少`v2`目录。
+
 # 其它建议
 
 如果我这里的脚本不符合你的需要，你可以自行修改/编写 AutoHotKey 脚本（ahk 文件）。AutoHotKey 官网有详细的语法说明和示例。
