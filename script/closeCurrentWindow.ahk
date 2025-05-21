@@ -3,6 +3,7 @@
     AutoHotkey 2.0 脚本
     作者：icexmoon@qq.com
     描述：电脑外接多个显示器时，可以最小化鼠标所在显示器的当前单个窗口
+    版本：v1.0
 */ 
 #+d:: ; 快捷键 win+shift+D
 {
